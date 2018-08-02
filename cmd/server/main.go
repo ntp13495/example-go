@@ -18,6 +18,7 @@ import (
 	"github.com/ntp13495/example-go/service"
 	bookSvc "github.com/ntp13495/example-go/service/book"
 	categorySvc "github.com/ntp13495/example-go/service/category"
+	lendingabookSvc "github.com/ntp13495/example-go/service/lendingabook"
 	userSvc "github.com/ntp13495/example-go/service/user"
 )
 
@@ -67,10 +68,10 @@ func main() {
 				bookSvc.NewPGService(pgDB),
 				// bookSvc.ValidationMiddleware(),
 			).(bookSvc.Service),
-			// LendingBookService: service.Compose(
-			// 	lendingbookSvc.NewPGService(pgDB),
-			// 	// lendingbookSvc.ValidationMiddleware(),
-			// ).(lendingbookSvc.Service),
+			LendingBookService: service.Compose(
+				lendingabookSvc.NewPGService(pgDB),
+				// lendingbookSvc.ValidationMiddleware(),
+			).(lendingabookSvc.Service),
 		}
 	)
 	defer closeDB()
