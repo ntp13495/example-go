@@ -29,30 +29,30 @@ func (s *pgService) Create(_ context.Context, p *domain.Book) error {
 			return ErrRecordExisted
 		}
 	}
-	// resCategory := []domain.Category{}
-	// s.db.Find(&resCategory)
-	// flag := 0
-	// for _, iterator := range resCategory {
-	// 	if p.CategoryID == iterator.ID {
-	// 		flag = 1
-	// 	}
-	// }
-	// if flag == 0 {
-	// 	return ErrInvalidCategory
-	// }
-	// if p.Name == "" {
-	// 	return ErrBookNameIsRequired
-	// }
-	// if len(p.Name) <= 5 {
-	// 	return ErrBookNameLengthIsRequired
-	// }
+	resCategory := []domain.Category{}
+	s.db.Find(&resCategory)
+	flag := 0
+	for _, iterator := range resCategory {
+		if p.CategoryID == iterator.ID {
+			flag = 1
+		}
+	}
+	if flag == 0 {
+		return ErrInvalidCategory
+	}
+	if p.Name == "" {
+		return ErrBookNameIsRequired
+	}
+	if len(p.Name) <= 5 {
+		return ErrBookNameLengthIsRequired
+	}
 
-	// if p.Description == "" {
-	// 	return ErrDescriptionIsRequired
-	// }
-	// if len(p.Description) <= 5 {
-	// 	return ErrDescriptionLengthIsRequired
-	// }
+	if p.Description == "" {
+		return ErrDescriptionIsRequired
+	}
+	if len(p.Description) <= 5 {
+		return ErrDescriptionLengthIsRequired
+	}
 	return s.db.Create(p).Error
 }
 
@@ -66,37 +66,37 @@ func (s *pgService) Update(_ context.Context, p *domain.Book) (*domain.Book, err
 		return nil, err
 	}
 
-	// resBook := []domain.Book{}
-	// s.db.Find(&resBook)
-	// for _, iterator := range resBook {
-	// 	if p.Name == iterator.Name {
-	// 		return nil, ErrRecordExisted
-	// 	}
-	// }
-	// resCategory := []domain.Category{}
-	// s.db.Find(&resCategory)
-	// flag := 0
-	// for _, iterator := range resCategory {
-	// 	if p.CategoryID == iterator.ID {
-	// 		flag = 1
-	// 	}
-	// }
-	// if flag == 0 {
-	// 	return nil, ErrInvalidCategory
-	// }
-	// if p.Name == "" {
-	// 	return nil, ErrBookNameIsRequired
-	// }
-	// if len(p.Name) <= 5 {
-	// 	return nil, ErrBookNameLengthIsRequired
-	// }
+	resBook := []domain.Book{}
+	s.db.Find(&resBook)
+	for _, iterator := range resBook {
+		if p.Name == iterator.Name {
+			return nil, ErrRecordExisted
+		}
+	}
+	resCategory := []domain.Category{}
+	s.db.Find(&resCategory)
+	flag := 0
+	for _, iterator := range resCategory {
+		if p.CategoryID == iterator.ID {
+			flag = 1
+		}
+	}
+	if flag == 0 {
+		return nil, ErrInvalidCategory
+	}
+	if p.Name == "" {
+		return nil, ErrBookNameIsRequired
+	}
+	if len(p.Name) <= 5 {
+		return nil, ErrBookNameLengthIsRequired
+	}
 
-	// if p.Description == "" {
-	// 	return nil, ErrDescriptionIsRequired
-	// }
-	// if len(p.Description) <= 5 {
-	// 	return nil, ErrDescriptionLengthIsRequired
-	// }
+	if p.Description == "" {
+		return nil, ErrDescriptionIsRequired
+	}
+	if len(p.Description) <= 5 {
+		return nil, ErrDescriptionLengthIsRequired
+	}
 
 	old.Name = p.Name
 	old.CategoryID = p.CategoryID
