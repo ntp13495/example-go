@@ -30,6 +30,30 @@ func (s *pgService) Create(_ context.Context, p *domain.LendingBooks) error {
 		}
 	}
 
+	resBook := []domain.Book{}
+	s.db.Find(&resBook)
+	flag := 0
+	for _, iterator := range resBook {
+		if p.BookID == iterator.ID {
+			flag = 1
+		}
+	}
+	if flag == 0 {
+		return ErrInvalidBook
+	}
+
+	resUser := []domain.User{}
+	s.db.Find(&resUser)
+	flag = 0
+	for _, iterator := range resUser {
+		if p.UserID == iterator.ID {
+			flag = 1
+		}
+	}
+	if flag == 0 {
+		return ErrInvalidUser
+	}
+
 	return s.db.Create(p).Error
 }
 
@@ -43,29 +67,29 @@ func (s *pgService) Update(_ context.Context, p *domain.LendingBooks) (*domain.L
 		return nil, err
 	}
 
-	// resBook := []domain.Book{}
-	// s.db.Find(&resBook)
-	// flag := 0
-	// for _, iterator := range resBook {
-	// 	if p.BookID == iterator.ID {
-	// 		flag = 1
-	// 	}
-	// }
-	// if flag == 0 {
-	// 	return nil, ErrInvalidBook
-	// }
+	resBook := []domain.Book{}
+	s.db.Find(&resBook)
+	flag := 0
+	for _, iterator := range resBook {
+		if p.BookID == iterator.ID {
+			flag = 1
+		}
+	}
+	if flag == 0 {
+		return nil, ErrInvalidBook
+	}
 
-	// resUser := []domain.User{}
-	// s.db.Find(&resUser)
-	// flag = 0
-	// for _, iterator := range resUser {
-	// 	if p.UserID == iterator.ID {
-	// 		flag = 1
-	// 	}
-	// }
-	// if flag == 0 {
-	// 	return nil, ErrInvalidUser
-	// }
+	resUser := []domain.User{}
+	s.db.Find(&resUser)
+	flag = 0
+	for _, iterator := range resUser {
+		if p.UserID == iterator.ID {
+			flag = 1
+		}
+	}
+	if flag == 0 {
+		return nil, ErrInvalidUser
+	}
 
 	old.BookID = p.BookID
 	old.UserID = p.UserID
