@@ -12,6 +12,7 @@ import (
 	"github.com/ntp13495/example-go/endpoints"
 	bookDecode "github.com/ntp13495/example-go/http/decode/json/book"
 	categoryDecode "github.com/ntp13495/example-go/http/decode/json/category"
+	lendingabookDecode "github.com/ntp13495/example-go/http/decode/json/lendingabook"
 	userDecode "github.com/ntp13495/example-go/http/decode/json/user"
 )
 
@@ -143,38 +144,38 @@ func NewHTTPHandler(endpoints endpoints.Endpoints,
 		).ServeHTTP)
 	})
 
-	// r.Route("/lendingbook", func(r chi.Router) {
-	// 	r.Get("/", httptransport.NewServer(
-	// 		endpoints.FindAllLendingBook,
-	// 		lendingbookDecode.FindAllRequest,
-	// 		encodeResponse,
-	// 		options...,
-	// 	).ServeHTTP)
-	// 	r.Get("/{lendingbook_id}", httptransport.NewServer(
-	// 		endpoints.FindLendingBook,
-	// 		lendingbookDecode.FindRequest,
-	// 		encodeResponse,
-	// 		options...,
-	// 	).ServeHTTP)
-	// 	r.Post("/", httptransport.NewServer(
-	// 		endpoints.CreateLendingBook,
-	// 		lendingbookDecode.CreateRequest,
-	// 		encodeResponse,
-	// 		options...,
-	// 	).ServeHTTP)
-	// 	r.Put("/{lendingbook_id}", httptransport.NewServer(
-	// 		endpoints.UpdateLendingBook,
-	// 		lendingbookDecode.UpdateRequest,
-	// 		encodeResponse,
-	// 		options...,
-	// 	).ServeHTTP)
-	// 	r.Delete("/{lendingbook_id}", httptransport.NewServer(
-	// 		endpoints.DeleteLendingBook,
-	// 		lendingbookDecode.DeleteRequest,
-	// 		encodeResponse,
-	// 		options...,
-	// 	).ServeHTTP)
-	// })
+	r.Route("/lendingbooks", func(r chi.Router) {
+		r.Get("/", httptransport.NewServer(
+			endpoints.FindAllLendingBook,
+			lendingabookDecode.FindAllRequest,
+			encodeResponse,
+			options...,
+		).ServeHTTP)
+		r.Get("/{lendingbook_id}", httptransport.NewServer(
+			endpoints.FindLendingBook,
+			lendingabookDecode.FindRequest,
+			encodeResponse,
+			options...,
+		).ServeHTTP)
+		r.Post("/", httptransport.NewServer(
+			endpoints.CreateLendingBook,
+			lendingabookDecode.CreateRequest,
+			encodeResponse,
+			options...,
+		).ServeHTTP)
+		r.Put("/{lendingbook_id}", httptransport.NewServer(
+			endpoints.UpdateLendingBook,
+			lendingabookDecode.UpdateRequest,
+			encodeResponse,
+			options...,
+		).ServeHTTP)
+		r.Delete("/{lendingbook_id}", httptransport.NewServer(
+			endpoints.DeleteLendingBook,
+			lendingabookDecode.DeleteRequest,
+			encodeResponse,
+			options...,
+		).ServeHTTP)
+	})
 
 	return r
 }
