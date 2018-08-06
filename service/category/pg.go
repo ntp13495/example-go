@@ -98,13 +98,13 @@ func (s *pgService) Delete(_ context.Context, p *domain.Category) error {
 		return err
 	}
 
-	// // delete all books belong to this category
-	// resBook := []domain.Book{}
-	// s.db.Find(&resBook)
-	// for _, iterator := range resBook {
-	// 	if p.ID == iterator.CategoryID {
-	// 		s.db.Delete(iterator)
-	// 	}
-
+	// delete all books belong to this category
+	resBook := []domain.Book{}
+	s.db.Find(&resBook)
+	for _, iterator := range resBook {
+		if p.ID == iterator.CategoryID {
+			s.db.Delete(iterator)
+		}
+	}
 	return s.db.Delete(old).Error
 }
