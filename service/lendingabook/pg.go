@@ -25,7 +25,7 @@ func (s *pgService) Create(_ context.Context, p *domain.LendingBooks) error {
 	res := []domain.LendingBooks{}
 	s.db.Find(&res)
 	for _, iterator := range res {
-		if p.BookID == iterator.BookID {
+		if p.BookID == iterator.BookID && p.From.Before(iterator.To) {
 			return ErrBookInUse
 		}
 	}
